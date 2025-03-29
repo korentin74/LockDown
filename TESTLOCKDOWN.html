@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Club Secret</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00ffcc;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding-top: 10%;
+        }
+        h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            animation: glitch 1.5s infinite;
+        }
+        #countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px red, -2px -2px blue; }
+            50% { text-shadow: -2px -2px red, 2px 2px blue; }
+            100% { text-shadow: 2px -2px red, -2px 2px blue; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Le compte à rebours a commencé...</h1>
+    <div id="countdown"></div>
+    <script>
+        function updateCountdown() {
+            const eventDate = new Date();
+            eventDate.setMonth(eventDate.getMonth() + 3); // Ajoute 3 mois
+            
+            function calculateTime() {
+                const now = new Date().getTime();
+                const timeLeft = eventDate - now;
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+                if (timeLeft > 0) {
+                    requestAnimationFrame(calculateTime);
+                } else {
+                    document.getElementById("countdown").innerHTML = "Le temps est écoulé...";
+                }
+            }
+            calculateTime();
+        }
+        updateCountdown();
+    </script>
+</body>
+</html>
